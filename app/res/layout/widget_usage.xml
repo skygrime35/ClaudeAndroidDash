@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@drawable/widget_bg">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="28dp">
+        <ProgressBar
+            android:id="@+id/block_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_block" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5h"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+            <TextView
+                android:id="@+id/block_remaining"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+            <TextView
+                android:id="@+id/block_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_marginTop="4dp">
+        <ProgressBar
+            android:id="@+id/week_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_total" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Week"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+            <TextView
+                android:id="@+id/week_remaining"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:text=""
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+            <TextView
+                android:id="@+id/week_pct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

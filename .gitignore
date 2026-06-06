@@ -1,0 +1,11 @@
+build/
+*.apk
+*.apk.idsig
+*.idsig
+
+.DS_Store
+*.swp
+*.swo
+*~
+
+.cache/

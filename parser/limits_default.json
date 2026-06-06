@@ -1,0 +1,25 @@
+{
+  "tier": "max5x",
+  "tiers": {
+    "pro": {
+      "block_5h_sonnet": 7000000,
+      "week_sonnet": 80000000,
+      "week_total": 100000000
+    },
+    "max5x": {
+      "block_5h_sonnet": 35000000,
+      "week_sonnet": 380000000,
+      "week_total": 440000000
+    },
+    "max20x": {
+      "block_5h_sonnet": 140000000,
+      "week_sonnet": 1500000000,
+      "week_total": 1700000000
+    }
+  },
+  "overrides": {
+    "block_5h_sonnet": null,
+    "week_sonnet": null,
+    "week_total": null
+  }
+}
