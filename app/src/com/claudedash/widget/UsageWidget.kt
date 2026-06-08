@@ -37,16 +37,20 @@ class UsageWidget : AppWidgetProvider() {
         for (id in mgr.getAppWidgetIds(component)) {
             mgr.updateAppWidget(id, WidgetRenderer.renderRefreshing(context))
         }
-        Handler(Looper.getMainLooper()).postDelayed({
+        val handler = Handler(Looper.getMainLooper())
+        val rerender = Runnable {
             val snapshot = ServiceLocator.usageRepository.read()
             for (id in mgr.getAppWidgetIds(component)) {
                 mgr.updateAppWidget(id, WidgetRenderer.renderSnapshot(context, snapshot))
             }
-        }, REFRESH_RENDER_DELAY_MS)
+        }
+        for (delay in REFRESH_RENDER_DELAYS_MS) handler.postDelayed(rerender, delay)
     }
 
     companion object {
         const val ACTION_REFRESH = "com.claudedash.widget.ACTION_REFRESH"
-        private const val REFRESH_RENDER_DELAY_MS = 2_500L
+        // The API refresh runs inside the PRoot distro: warm ~3s, cold start ~8s.
+        // Re-render twice so a warm hit feels snappy and a cold start still lands.
+        private val REFRESH_RENDER_DELAYS_MS = longArrayOf(3_500L, 8_000L)
     }
 }

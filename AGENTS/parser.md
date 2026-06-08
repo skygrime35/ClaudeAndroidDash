@@ -1,14 +1,31 @@
 # Module: parser/
 
-> Python fallback. Used only when the user has no live Claude Code session writing via the statusline hook.
+> Off-session refreshers. Used when no live Claude Code session is writing via the statusline hook on **this** device (e.g. the user runs Claude elsewhere and only taps the widget here).
 
 ## What lives here
 
 | Path | Role |
 |---|---|
-| `parser/claude_usage.py` | Walks `~/.claude/projects/**/*.jsonl`, aggregates assistant turns, writes `/sdcard/Download/claude_usage.json` with `source: "legacy"` |
-| `parser/install_cron.sh` | Registers a `termux-job-scheduler` job (id 4242) that re-runs the parser every 5 min |
-| `parser/limits_default.json` | Per-tier token caps used when no override exists at `~/.config/claude-dash/limits.json` |
+| `parser/claude_usage_api.sh` | **Primary off-session path.** Reads the OAuth token from `~/.claude/.credentials.json`, refreshes it if expired, makes a 1-token Haiku request, maps the `anthropic-ratelimit-unified-*` response headers, writes `/sdcard/Download/claude_usage.json` with `source: "api"`. Account-scoped, 1:1 with claude.ai. Runs **inside the PRoot distro** (that's where the credentials live). |
+| `parser/install_cron_api.sh` | Registers a `termux-job-scheduler` job (id 4243, every 15 min) whose wrapper does `proot-distro login ubuntu -- bash claude_usage_api.sh`. **Run from host Termux.** |
+| `parser/claude_usage.py` | Legacy estimator. Walks `~/.claude/projects/**/*.jsonl`, aggregates assistant turns, writes `source: "legacy"`. No longer wired to the widget refresh button (kept as an offline estimate). |
+| `parser/install_cron.sh` | Registers a `termux-job-scheduler` job (id 4242) that re-runs the **Python** parser every 5 min |
+| `parser/limits_default.json` | Per-tier token caps used by the Python parser when no override exists at `~/.config/claude-dash/limits.json` |
+
+## The API path (`claude_usage_api.sh`)
+
+This is what the widget's refresh button now triggers (see `adapter/refresh/TermuxRefreshTrigger`). It needs **no live session** because the 5h/7d rate limits are account-scoped and returned in every API response's headers:
+
+```
+anthropic-ratelimit-unified-5h-utilization  -> five_hour.used_pct  (×100, rounded)
+anthropic-ratelimit-unified-5h-reset        -> five_hour.resets_at
+anthropic-ratelimit-unified-7d-utilization  -> seven_day.used_pct
+anthropic-ratelimit-unified-7d-reset        -> seven_day.resets_at
+```
+
+**Token refresh**: the OAuth access token expires ~every 8h. The script refreshes it via the `refreshToken` against `https://console.anthropic.com/v1/oauth/token` (Claude Code client_id `9d1c250a-e61b-44d9-88ed-5944d1962f5e`) when expired or on a 401, then rewrites `~/.claude/.credentials.json` atomically (preserving all other fields). Without this the widget would die ~8h after the last real Claude Code use on this device.
+
+**PRoot bridge**: Claude Code and its credentials live inside the PRoot distro (`ubuntu`), but the widget can only fire host-Termux intents. Both the refresh button and the cron therefore wrap the script in `proot-distro login ubuntu -- bash …`. The repo home is bind-mounted at the same path inside and outside the distro, so the script path is identical. Override the distro name with `CLAUDE_DASH_DISTRO`.
 
 ## When to use vs. statusline
 
@@ -26,7 +43,7 @@ Prefer the statusline path always. The Python parser ships estimates, not the re
 
 ## Output schema
 
-`source: "legacy"`. `JsonFileUsageRepository.parseLegacy` knows this shape. If you change the schema, update the parser there too.
+The Python parser writes `source: "legacy"` (`JsonFileUsageRepository.parseLegacy`). `claude_usage_api.sh` writes `source: "api"`, reusing the exact `statusline` shape (`five_hour`/`seven_day` with `used_pct`+`resets_at`; `model`/`context`/`cost` omitted), so `parseStatusline` handles it. If you change either schema, update the matching parser branch.
 
 ## Limits resolution
 

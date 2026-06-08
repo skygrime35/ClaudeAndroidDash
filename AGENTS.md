@@ -122,7 +122,11 @@ com.claudedash.widget/
 └──────────────────────────────────────────────┘
 ```
 
-**Single source of truth**: the JSON dropped by the statusline hook. The standalone Python parser (`parser/claude_usage.py`) exists as a **fallback** when the user has no live Claude Code session, but its numbers are estimates derived from local JSONL files (less accurate — do not prefer unless asked).
+**Single source of truth**: the JSON at `/sdcard/Download/claude_usage.json`. Three writers, in order of preference:
+
+1. **statusline hook** (`source: "statusline"`) — live session on this device. Richest (model, context, cost).
+2. **`parser/claude_usage_api.sh`** (`source: "api"`) — **off-session path**, what the refresh button now triggers. Reads the OAuth token, queries the API, maps the account-scoped `anthropic-ratelimit-unified-*` headers. Just as accurate as statusline for the 5h/7d bars, and needs **no live session** — this is the fix for "I use Claude on another device but only the widget here". Runs inside the PRoot distro. See `AGENTS/parser.md`.
+3. **`parser/claude_usage.py`** (`source: "legacy"`) — estimates from local JSONL. Least accurate; no longer wired to the button.
 
 ## Repo layout
 

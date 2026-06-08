@@ -14,7 +14,7 @@ class JsonFileUsageRepository : UsageRepository {
         return try {
             val root = JSONObject(file.readText())
             when (root.optString("source", "")) {
-                "statusline" -> parseStatusline(root)
+                "statusline", "api" -> parseStatusline(root)
                 else -> parseLegacy(root)
             }
         } catch (_: Throwable) {
