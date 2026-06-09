@@ -23,7 +23,7 @@ anthropic-ratelimit-unified-7d-utilization  -> seven_day.used_pct
 anthropic-ratelimit-unified-7d-reset        -> seven_day.resets_at
 ```
 
-**Token refresh**: the OAuth access token expires ~every 8h. The script refreshes it via the `refreshToken` against `https://console.anthropic.com/v1/oauth/token` (Claude Code client_id `9d1c250a-e61b-44d9-88ed-5944d1962f5e`) when expired or on a 401, then rewrites `~/.claude/.credentials.json` atomically (preserving all other fields). Without this the widget would die ~8h after the last real Claude Code use on this device.
+**Token refresh**: the OAuth access token expires ~every 8h. The script refreshes it via the `refreshToken` against `https://api.anthropic.com/v1/oauth/token` (Claude Code client_id `9d1c250a-e61b-44d9-88ed-5944d1962f5e`) when expired or on a 401, then rewrites `~/.claude/.credentials.json` atomically (preserving all other fields). Without this the widget would die ~8h after the last real Claude Code use on this device.
 
 **PRoot bridge**: Claude Code and its credentials live inside the PRoot distro (`ubuntu`), but the widget can only fire host-Termux intents. Both the refresh button and the cron therefore wrap the script in `proot-distro login ubuntu -- bash …`. The repo home is bind-mounted at the same path inside and outside the distro, so the script path is identical. Override the distro name with `CLAUDE_DASH_DISTRO`.
 
