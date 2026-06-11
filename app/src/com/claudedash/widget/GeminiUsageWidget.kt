@@ -10,7 +10,7 @@ import android.os.Looper
 import com.claudedash.widget.di.ServiceLocator
 import com.claudedash.widget.ui.WidgetRenderer
 
-class UsageWidget : AppWidgetProvider() {
+class GeminiUsageWidget : AppWidgetProvider() {
 
     override fun onUpdate(
         context: Context,
@@ -21,7 +21,7 @@ class UsageWidget : AppWidgetProvider() {
         for (id in appWidgetIds) {
             appWidgetManager.updateAppWidget(
                 id,
-                WidgetRenderer.renderSnapshot(context, snapshot)
+                WidgetRenderer.renderGeminiSnapshot(context, snapshot)
             )
         }
     }
@@ -31,36 +31,36 @@ class UsageWidget : AppWidgetProvider() {
         val action = intent.action ?: return
 
         if (action == ACTION_REFRESH) {
-            ServiceLocator.refreshTrigger(context).trigger("claude")
+            ServiceLocator.refreshTrigger(context).trigger("gemini")
 
             val mgr = AppWidgetManager.getInstance(context)
-            val component = ComponentName(context, UsageWidget::class.java)
+            val component = ComponentName(context, GeminiUsageWidget::class.java)
             for (id in mgr.getAppWidgetIds(component)) {
-                mgr.updateAppWidget(id, WidgetRenderer.renderRefreshing(context))
+                mgr.updateAppWidget(id, WidgetRenderer.renderGeminiRefreshing(context))
             }
             val handler = Handler(Looper.getMainLooper())
             val rerender = Runnable {
                 val snapshot = ServiceLocator.usageRepository.read()
                 for (id in mgr.getAppWidgetIds(component)) {
-                    mgr.updateAppWidget(id, WidgetRenderer.renderSnapshot(context, snapshot))
+                    mgr.updateAppWidget(id, WidgetRenderer.renderGeminiSnapshot(context, snapshot))
                 }
             }
             for (delay in REFRESH_RENDER_DELAYS_MS) handler.postDelayed(rerender, delay)
         } else if (action == ACTION_UPDATE_ALL) {
             val mgr = AppWidgetManager.getInstance(context)
-            val component = ComponentName(context, UsageWidget::class.java)
+            val component = ComponentName(context, GeminiUsageWidget::class.java)
             val snapshot = ServiceLocator.usageRepository.read()
             for (id in mgr.getAppWidgetIds(component)) {
-                mgr.updateAppWidget(id, WidgetRenderer.renderSnapshot(context, snapshot))
+                mgr.updateAppWidget(id, WidgetRenderer.renderGeminiSnapshot(context, snapshot))
             }
         }
     }
 
     companion object {
-        const val ACTION_REFRESH = "com.claudedash.widget.ACTION_REFRESH"
+        const val ACTION_REFRESH = "com.claudedash.widget.ACTION_REFRESH_GEMINI"
         const val ACTION_UPDATE_ALL = "com.claudedash.widget.ACTION_UPDATE_ALL"
-        // The API refresh runs inside the PRoot distro: warm ~3s, cold start ~8s.
-        // Re-render twice so a warm hit feels snappy and a cold start still lands.
-        private val REFRESH_RENDER_DELAYS_MS = longArrayOf(3_500L, 8_000L)
+        // Gemini lance agy (CLI lourde) via proot-distro : ~25s. On re-render à 12s puis 26s
+        // (le broadcast final du script reste la garantie principale de mise à jour).
+        private val REFRESH_RENDER_DELAYS_MS = longArrayOf(12_000L, 26_000L)
     }
 }

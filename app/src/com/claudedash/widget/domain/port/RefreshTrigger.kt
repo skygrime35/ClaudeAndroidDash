@@ -1,5 +1,5 @@
 package com.claudedash.widget.domain.port
 
 interface RefreshTrigger {
-    fun trigger()
+    fun trigger(target: String)
 }

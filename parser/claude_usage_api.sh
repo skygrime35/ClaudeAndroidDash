@@ -11,8 +11,8 @@
 set -u
 
 CREDS="${CLAUDE_CREDS:-$HOME/.claude/.credentials.json}"
-OUT="${CD_OUT:-/sdcard/Download/claude_usage.json}"
-TMP="${OUT}.tmp"
+OUT="${CD_OUT:-/sdcard/Download/usage.json}"
+TMP="${OUT}.$$.tmp"
 MODEL="claude-haiku-4-5-20251001"
 CLIENT_ID="9d1c250a-e61b-44d9-88ed-5944d1962f5e"
 TOKEN_URL="https://api.anthropic.com/v1/oauth/token"
@@ -78,11 +78,14 @@ rm -f "$HDR"
 pct() { awk -v u="${1:-0}" 'BEGIN{ printf("%d", (u * 100) + 0.5) }'; }
 NOW_ISO=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
-jq -n --arg ua "$NOW_ISO" \
+# Construit la section .claude et la fusionne dans usage.json (préserve .google).
+CLAUDE_JSON=$(jq -n --arg ua "$NOW_ISO" \
   --argjson fhp "$(pct "$FH_U")" --argjson fhr "${FH_R:-0}" \
   --argjson sdp "$(pct "$SD_U")" --argjson sdr "${SD_R:-0}" \
   '{updated_at: $ua, source: "api",
     five_hour: {used_pct: $fhp, resets_at: $fhr},
-    seven_day: {used_pct: $sdp, resets_at: $sdr}}' > "$TMP" \
-  && mv -f "$TMP" "$OUT"
-echo "wrote $OUT"
+    seven_day: {used_pct: $sdp, resets_at: $sdr}}')
+[ -f "$OUT" ] || echo '{}' > "$OUT"
+jq --argjson c "$CLAUDE_JSON" '.claude = $c' "$OUT" > "$TMP" && mv -f "$TMP" "$OUT"
+echo "wrote .claude in $OUT"
+bash /data/data/com.termux/files/home/Projects/ClaudeAndroidDash/parser/notify_widgets.sh

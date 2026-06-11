@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.claudedash.widget"
-    android:versionCode="10"
-    android:versionName="2.3">
+    android:versionCode="26"
+    android:versionName="2.19">
 
     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="34" />
 
@@ -28,14 +28,50 @@
         <receiver
             android:name=".UsageWidget"
             android:exported="true"
-            android:label="Claude Dash">
+            android:label="Anthropic">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.claudedash.widget.ACTION_REFRESH" />
+                <action android:name="com.claudedash.widget.ACTION_UPDATE_ALL" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
+
+        <receiver
+            android:name=".GeminiUsageWidget"
+            android:exported="true"
+            android:label="Google">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.claudedash.widget.ACTION_REFRESH_GEMINI" />
+                <action android:name="com.claudedash.widget.ACTION_UPDATE_ALL" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_gemini" />
+        </receiver>
+
+        <receiver
+            android:name=".CombinedUsageWidget"
+            android:exported="true"
+            android:label="Anthropic + Google">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.claudedash.widget.ACTION_REFRESH_COMBINED" />
+                <action android:name="com.claudedash.widget.ACTION_UPDATE_ALL" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_combined" />
+        </receiver>
+
+        <activity
+            android:name=".RefreshActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:exported="false" />
     </application>
 </manifest>
