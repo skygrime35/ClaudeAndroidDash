@@ -55,15 +55,13 @@ object WidgetRenderer {
     private fun renderClaudeData(views: RemoteViews, snapshot: UsageSnapshot) {
         val fmt = ServiceLocator.formatter
         val fiveH = fmt.remaining(snapshot.fiveHourResetsAt)
-        views.setTextViewText(R.id.block_remaining,
-            if (fiveH.isNotEmpty()) "reset $fiveH" else "")
+        views.setTextViewText(R.id.block_remaining, fiveH)
         views.setProgressBar(R.id.block_bar, 100,
             (snapshot.fiveHourPercent ?: 0.0).toInt(), false)
         views.setTextViewText(R.id.block_pct, fmt.percent(snapshot.fiveHourPercent))
 
         val sevenD = fmt.remaining(snapshot.sevenDayResetsAt)
-        views.setTextViewText(R.id.week_remaining,
-            if (sevenD.isNotEmpty()) "reset $sevenD" else "")
+        views.setTextViewText(R.id.week_remaining, sevenD)
         views.setProgressBar(R.id.week_bar, 100,
             (snapshot.sevenDayPercent ?: 0.0).toInt(), false)
         views.setTextViewText(R.id.week_pct, fmt.percent(snapshot.sevenDayPercent))
@@ -136,7 +134,7 @@ object WidgetRenderer {
         views.setTextViewText(valId, if (pct != null) "$pct%" else "—")
         views.setProgressBar(barId, 100, pct ?: 0, false)
         val r = ServiceLocator.formatter.remaining(resetEpoch)
-        views.setTextViewText(subId, if (r.isNotEmpty()) "reset $r" else "")
+        views.setTextViewText(subId, r)
     }
 
     private fun refreshGeminiIntent(context: Context): PendingIntent {

@@ -34,8 +34,8 @@ All modes attach the `ACTION_REFRESH` PendingIntent on `R.id.widget_root` so the
 
 ## Layout invariants (`res/layout/widget_usage.xml`)
 
-- 1-cell-tall capable: `widget_info.xml` declares `minHeight=60dp`, `targetCellHeight=1`.
-- Each row is a `FrameLayout` with a `ProgressBar` (bottom) and a `LinearLayout` of overlaid `TextView`s (top), so labels sit *on* the bar — no vertical space wasted on titles.
+- 1-cell-tall capable: `widget_info.xml`, `widget_info_gemini.xml`, and `widget_info_combined.xml` declare `minHeight=40dp`, `targetCellHeight=1`.
+- Each row groups the label and remaining reset time horizontally inside a `56dp` fixed-width container. The progress bar follows (with no sub-text underneath, saving vertical space), and the percentage value sits on the right.
 - Text uses `android:shadowColor="#000000"` for legibility against any progress color.
 - Icon is an adaptive icon at `mipmap-anydpi-v26/ic_launcher.xml`. The bare `mipmap-mdpi` shape drawable is *not* a valid launcher icon and was removed.
 

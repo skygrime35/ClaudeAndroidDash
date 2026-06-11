@@ -3,161 +3,429 @@
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="8dp"
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
     android:background="@drawable/widget_bg">
 
-    <!-- Anthropic (Claude) -->
-    <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
-        android:layout_weight="1" android:orientation="vertical">
+    <!-- Row 1: Column Titles at the very top, centered horizontally -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="4dp">
+        
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Anthropic"
+            android:textColor="#A0A0B0"
+            android:textStyle="bold"
+            android:textSize="9sp"
+            android:gravity="center_horizontal" />
 
-        <FrameLayout android:layout_width="match_parent" android:layout_height="26dp">
-            <ProgressBar android:id="@+id/block_bar" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="26dp"
-                android:max="100" android:progress="0" android:progressDrawable="@drawable/progress_block" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="horizontal" android:gravity="center_vertical"
-                android:paddingLeft="8dp" android:paddingRight="8dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="5h" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/block_remaining" android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginLeft="4dp" android:text="" android:textColor="#FFFFFF"
-                    android:textSize="9sp" android:ellipsize="end" android:singleLine="true"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/block_pct" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="—" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-            </LinearLayout>
-        </FrameLayout>
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
 
-        <FrameLayout android:layout_width="match_parent" android:layout_height="26dp" android:layout_marginTop="4dp">
-            <ProgressBar android:id="@+id/week_bar" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="26dp"
-                android:max="100" android:progress="0" android:progressDrawable="@drawable/progress_total" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="horizontal" android:gravity="center_vertical"
-                android:paddingLeft="8dp" android:paddingRight="8dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="7j" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/week_remaining" android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginLeft="4dp" android:text="" android:textColor="#FFFFFF"
-                    android:textSize="9sp" android:ellipsize="end" android:singleLine="true"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/week_pct" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="—" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-            </LinearLayout>
-        </FrameLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Google"
+            android:textColor="#A0A0B0"
+            android:textStyle="bold"
+            android:textSize="9sp"
+            android:gravity="center_horizontal" />
     </LinearLayout>
 
-    <FrameLayout android:layout_width="1dp" android:layout_height="match_parent"
-        android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:background="#33FFFFFF" />
+    <!-- Row 2: Columns Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <!-- Google (Gemini + Claude) -->
-    <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
-        android:layout_weight="1" android:orientation="vertical">
+        <!-- Column 1: Anthropic (Claude) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
 
-        <FrameLayout android:layout_width="match_parent" android:layout_height="26dp">
-            <ProgressBar android:id="@+id/gcred_bar" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="26dp"
-                android:max="1000" android:progress="0" android:progressDrawable="@drawable/progress_gemini" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="horizontal" android:gravity="center_vertical"
-                android:paddingLeft="8dp" android:paddingRight="8dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Cr" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/gcred_sub" android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginLeft="4dp" android:text="" android:textColor="#FFFFFF"
-                    android:textSize="9sp" android:ellipsize="end" android:singleLine="true"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/gcred_val" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="—" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
+            <!-- Row 1: 5h -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp">
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:text="5h"
+                        android:textColor="#A0A0B0"
+                        android:textStyle="bold"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/block_remaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#60FFFFFF"
+                        android:textSize="8sp"
+                        android:singleLine="true" />
+                </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/block_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/progress_block" />
+                <TextView
+                    android:id="@+id/block_pct"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="—"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="11sp" />
             </LinearLayout>
-        </FrameLayout>
 
-        <FrameLayout android:layout_width="match_parent" android:layout_height="26dp" android:layout_marginTop="4dp">
-            <ProgressBar android:id="@+id/gem5_bar" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="26dp"
-                android:max="100" android:progress="0" android:progressDrawable="@drawable/progress_gemini" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="horizontal" android:gravity="center_vertical"
-                android:paddingLeft="8dp" android:paddingRight="8dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="G5h" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/gem5_sub" android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginLeft="4dp" android:text="" android:textColor="#FFFFFF"
-                    android:textSize="9sp" android:ellipsize="end" android:singleLine="true"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/gem5_val" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="—" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
+            <!-- Row 2: 7j -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp">
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:text="7j"
+                        android:textColor="#A0A0B0"
+                        android:textStyle="bold"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/week_remaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#60FFFFFF"
+                        android:textSize="8sp"
+                        android:singleLine="true" />
+                </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/week_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/progress_total" />
+                <TextView
+                    android:id="@+id/week_pct"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="—"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="11sp" />
             </LinearLayout>
-        </FrameLayout>
+        </LinearLayout>
 
-        <FrameLayout android:layout_width="match_parent" android:layout_height="26dp" android:layout_marginTop="4dp">
-            <ProgressBar android:id="@+id/gemw_bar" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="26dp"
-                android:max="100" android:progress="0" android:progressDrawable="@drawable/progress_gemini" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="horizontal" android:gravity="center_vertical"
-                android:paddingLeft="8dp" android:paddingRight="8dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="G7j" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/gemw_sub" android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginLeft="4dp" android:text="" android:textColor="#FFFFFF"
-                    android:textSize="9sp" android:ellipsize="end" android:singleLine="true"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/gemw_val" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="—" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-            </LinearLayout>
-        </FrameLayout>
+        <!-- Separator Line -->
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#20FFFFFF" />
 
-        <FrameLayout android:layout_width="match_parent" android:layout_height="26dp" android:layout_marginTop="4dp">
-            <ProgressBar android:id="@+id/clg5_bar" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="26dp"
-                android:max="100" android:progress="0" android:progressDrawable="@drawable/progress_block" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="horizontal" android:gravity="center_vertical"
-                android:paddingLeft="8dp" android:paddingRight="8dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="C5h" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/clg5_sub" android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginLeft="4dp" android:text="" android:textColor="#FFFFFF"
-                    android:textSize="9sp" android:ellipsize="end" android:singleLine="true"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/clg5_val" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="—" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-            </LinearLayout>
-        </FrameLayout>
+        <!-- Column 2: Google (Gemini + Claude) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
 
-        <FrameLayout android:layout_width="match_parent" android:layout_height="26dp" android:layout_marginTop="4dp">
-            <ProgressBar android:id="@+id/clgw_bar" style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent" android:layout_height="26dp"
-                android:max="100" android:progress="0" android:progressDrawable="@drawable/progress_block" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="horizontal" android:gravity="center_vertical"
-                android:paddingLeft="8dp" android:paddingRight="8dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="C7j" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/clgw_sub" android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:layout_marginLeft="4dp" android:text="" android:textColor="#FFFFFF"
-                    android:textSize="9sp" android:ellipsize="end" android:singleLine="true"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
-                <TextView android:id="@+id/clgw_val" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="—" android:textColor="#FFFFFF" android:textStyle="bold" android:textSize="11sp"
-                    android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="2" />
+            <!-- Row 1: Credits -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp">
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:text="Cr"
+                        android:textColor="#A0A0B0"
+                        android:textStyle="bold"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/gcred_sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#60FFFFFF"
+                        android:textSize="8sp"
+                        android:singleLine="true" />
+                </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/gcred_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:max="1000"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/progress_gemini" />
+                <TextView
+                    android:id="@+id/gcred_val"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="—"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="11sp" />
             </LinearLayout>
-        </FrameLayout>
+
+            <!-- Row 2: Gemini 5h -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp">
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:text="G5"
+                        android:textColor="#A0A0B0"
+                        android:textStyle="bold"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/gem5_sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#60FFFFFF"
+                        android:textSize="8sp"
+                        android:singleLine="true" />
+                </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/gem5_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/progress_gemini" />
+                <TextView
+                    android:id="@+id/gem5_val"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="—"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Row 3: Gemini 7j -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp">
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:text="G7"
+                        android:textColor="#A0A0B0"
+                        android:textStyle="bold"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/gemw_sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#60FFFFFF"
+                        android:textSize="8sp"
+                        android:singleLine="true" />
+                </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/gemw_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/progress_gemini" />
+                <TextView
+                    android:id="@+id/gemw_val"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="—"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Row 4: Claude Google 5h -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp">
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:text="C5"
+                        android:textColor="#A0A0B0"
+                        android:textStyle="bold"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/clg5_sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#60FFFFFF"
+                        android:textSize="8sp"
+                        android:singleLine="true" />
+                </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/clg5_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/progress_block" />
+                <TextView
+                    android:id="@+id/clg5_val"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="—"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Row 5: Claude Google 7j -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp">
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:text="C7"
+                        android:textColor="#A0A0B0"
+                        android:textStyle="bold"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:id="@+id/clgw_sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#60FFFFFF"
+                        android:textSize="8sp"
+                        android:singleLine="true" />
+                </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/clgw_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/progress_block" />
+                <TextView
+                    android:id="@+id/clgw_val"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="—"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
