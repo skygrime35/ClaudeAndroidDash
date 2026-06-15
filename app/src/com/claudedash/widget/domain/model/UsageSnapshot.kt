@@ -11,8 +11,6 @@ data class UsageSnapshot(
     val sevenDayPercent: Double?,
     val sevenDayResetsAt: Long?,
     val geminiUpdatedAt: String?,
-    // Crédits IA Google (lus via agy /credits, en arrière-plan).
-    val geminiCredits: Int? = null,
     // Quota Google via l'API Code Assist (retrieveUserQuotaSummary) : % RESTANT par fenêtre.
     // Gemini (modèles Google) et Claude/3p (Claude & GPT inclus dans l'abo Google).
     val gemini5hPct: Int? = null,

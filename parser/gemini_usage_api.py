@@ -161,7 +161,10 @@ def main():
             print(f"loadCodeAssist failed: {e}", flush=True)
 
     qs = call(QUOTA_URL, {"project": project})
-    buckets = {b.get("bucketId"): b for b in qs.get("buckets", [])}
+    buckets = {}
+    for group in qs.get("groups", []):
+        for b in group.get("buckets", []):
+            buckets[b.get("bucketId")] = b
 
     def pct(bid):
         b = buckets.get(bid)
@@ -171,20 +174,22 @@ def main():
         b = buckets.get(bid)
         return iso_to_epoch(b.get("resetTime", "")) if b else None
 
-    # Fichier unique : on charge l'existant pour préserver .claude (et les crédits .google).
+    # Fichier unique : on charge l'existant pour préserver la section .claude.
     root = {}
     try:
         with open(OUT) as f:
             root = json.load(f)
     except Exception:
         pass
-    # Crédits IA : agy ne les expose plus en texte et l'API ne les fournit pas → valeur fixe.
-    credits = (root.get("google") or {}).get("credits") or 1000
-
+    # NB : pas de champ "credits" ici. Les crédits IA Google One (1000/mois sur AI Pro) ne
+    # sont exposés par AUCUNE API Code Assist accessible (loadCodeAssist ne renvoie pas
+    # availableCredits, les verbes :*Credits sont en 404, generateContent n'inclut rien).
+    # agy les lit via gRPC pur et ne tourne pas sans TTY. Seule source fiable : la page web
+    # one.google.com/u/1/ai/activity. Tant qu'on n'a pas cette donnée, la ligne crédits a été
+    # retirée des widgets plutôt que d'afficher une valeur fictive. Voir docs/DEVLOG.md.
     root["google"] = {
         "updated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": "antigravity-api",
-        "credits": credits,
         "gemini_5h_pct": pct("gemini-5h"), "gemini_5h_reset": reset("gemini-5h"),
         "gemini_week_pct": pct("gemini-weekly"), "gemini_week_reset": reset("gemini-weekly"),
         "claude_5h_pct": pct("3p-5h"), "claude_5h_reset": reset("3p-5h"),

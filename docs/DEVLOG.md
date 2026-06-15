@@ -50,11 +50,30 @@ lieu des quotas → « No data parsed » aléatoire. À ABANDONNER.
   `remainingFraction` (omis si =100 %) et `resetTime`. **Exactement** ce qu'on voulait.
   Body : `{"project": "<cloudaicompanionProject>"}` obtenu via `:loadCodeAssist`.
 
-**Impasse 4 — le nombre de crédits IA (« 1000 »).** Introuvable par l'API
-(`loadCodeAssist`, `retrieveUserQuota`, `fetchUserInfo` testés). Et `agy /credits` ne
-l'affiche **plus** en texte (renvoie vers une page web). Pire : le « 1000 » qu'on voyait
-était une **valeur par défaut hardcodée** par le statusline, jamais une vraie lecture.
-→ Décision : **valeur fixe 1000** dans le widget.
+**Impasse 4 — le nombre de crédits IA (« 1000 »). → Ligne RETIRÉE des widgets (2026-06-15).**
+Ces crédits existent bien : ce sont les **crédits Google One / Google AI Pro** (1000/mois,
+visibles sur `https://one.google.com/u/1/ai/activity`), dépensables dans Antigravity *en plus*
+des quotas 5h/semaine. Mais ils ne sont **exposés par aucune API Code Assist accessible** avec
+le token dont on dispose. Vérifié exhaustivement :
+- `:loadCodeAssist` → le compte est bien `g1-pro-tier` (« Google AI Pro »), mais la réponse
+  ne contient **pas** `availableCredits` (champ proto 14) ni `g1Tier` (champ 11), et ce quel
+  que soit le `pluginType` accepté (seuls `GEMINI` et `CLOUD_CODE` passent ; les autres → 400).
+- 8 verbes `:…Credits` candidats (sur `cloudcode-pa` ET `daily-cloudcode-pa`) → **tous 404**.
+- `:retrieveUserQuota` → buckets par modèle (pas de crédits) ; `:fetchUserInfo` → région seule ;
+  `:fetchQuotaStatus` → 404 ; `:generateContent` → réponse sans `remainingCredits`, `metadata` vide.
+- Dans le binaire `agy` : les crédits = **« G1 Credits »**, récupérés par la méthode **gRPC pure**
+  `backend.GetG1Credits` (pas de transcodage REST/JSON). `agy` lui-même logue des échecs
+  (`credits_manager.go: failed to refresh G1 credits`, `GetG1Credits: paidTier is nil`) et **ne
+  tourne pas sans vrai TTY** (bubbletea), donc non scriptable en tâche de fond.
+- La seule source fiable du nombre reste la **page web Google One** (auth par session navigateur,
+  hors scope du token OAuth `antigravity-cli`).
+
+→ **Décision** : tant qu'on n'a pas cette donnée de façon fiable, **on ne l'affiche pas**. La
+ligne « crédits IA » (ids `gcred_*`) a été retirée de `widget_gemini.xml` et `widget_combined.xml`,
+le champ `geminiCredits`/`credits` retiré de `UsageSnapshot`/`JsonFileUsageRepository`/`WidgetRenderer`
+et du JSON produit par `gemini_usage_api.py`. Mieux vaut pas de ligne qu'un « 1000 » fictif.
+Si un jour on veut le récupérer : seule voie = répliquer l'appel **gRPC** `GetG1Credits` d'`agy`
+(HTTP/2 + protobuf bruts), faisable mais lourd et au résultat incertain.
 
 **Token Google.** Expire en ~1h. On le rafraîchit (`grant_type=refresh_token`) avec les
 `client_id/secret` d'app installée Antigravity (extraits du binaire `agy`). Refresh

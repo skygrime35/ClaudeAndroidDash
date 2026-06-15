@@ -37,7 +37,7 @@ All modes attach the `ACTION_REFRESH` PendingIntent on `R.id.widget_root` so the
 - 1-cell-tall capable: `widget_info.xml`, `widget_info_gemini.xml`, and `widget_info_combined.xml` declare `minHeight=40dp`, `targetCellHeight=1`.
 - Each row groups the label and remaining reset time horizontally inside a `56dp` fixed-width container. The progress bar follows (with no sub-text underneath, saving vertical space), and the percentage value sits on the right.
 - Text uses `android:shadowColor="#000000"` for legibility against any progress color.
-- Icon is an adaptive icon at `mipmap-anydpi-v26/ic_launcher.xml`. The bare `mipmap-mdpi` shape drawable is *not* a valid launcher icon and was removed.
+- Icon is a built-in Android system drawable (`@android:drawable/ic_menu_recent_history`) to match the style of TagCopy and AndroidAppLogs.
 
 ## Stable intent action
 

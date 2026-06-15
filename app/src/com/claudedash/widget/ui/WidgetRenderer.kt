@@ -95,9 +95,6 @@ object WidgetRenderer {
     }
 
     private fun refreshingGoogle(views: RemoteViews) {
-        views.setProgressBar(R.id.gcred_bar, 1000, 0, true)
-        views.setTextViewText(R.id.gcred_val, "…")
-        views.setTextViewText(R.id.gcred_sub, "")
         for (bar in GOOGLE_BARS) views.setProgressBar(bar, 100, 0, true)
         for (v in GOOGLE_VALS) views.setTextViewText(v, "…")
         for (s in GOOGLE_SUBS) views.setTextViewText(s, "")
@@ -108,20 +105,14 @@ object WidgetRenderer {
             s.claudeG5hPct != null || s.claudeGWeekPct != null)
 
     private fun renderGeminiEmpty(views: RemoteViews) {
-        views.setProgressBar(R.id.gcred_bar, 1000, 0, false)
-        views.setTextViewText(R.id.gcred_val, "—")
-        views.setTextViewText(R.id.gcred_sub, "")
         for (bar in GOOGLE_BARS) views.setProgressBar(bar, 100, 0, false)
         for (v in GOOGLE_VALS) views.setTextViewText(v, "—")
         for (s in GOOGLE_SUBS) views.setTextViewText(s, "")
     }
 
     private fun renderGeminiData(views: RemoteViews, s: UsageSnapshot) {
-        // Ligne Crédits IA (en haut, échelle ~1000)
-        val credits = s.geminiCredits
-        views.setTextViewText(R.id.gcred_val, if (credits != null) "$credits" else "—")
-        views.setProgressBar(R.id.gcred_bar, 1000, credits ?: 0, false)
-        views.setTextViewText(R.id.gcred_sub, if (credits != null) "crédits IA" else "")
+        // NB : la ligne "crédits IA" Google One a été retirée — voir docs/DEVLOG.md (donnée
+        // non exposée par l'API Code Assist accessible).
         googleLine(views, R.id.gem5_bar, R.id.gem5_val, R.id.gem5_sub, s.gemini5hPct, s.gemini5hReset)
         googleLine(views, R.id.gemw_bar, R.id.gemw_val, R.id.gemw_sub, s.geminiWeekPct, s.geminiWeekReset)
         googleLine(views, R.id.clg5_bar, R.id.clg5_val, R.id.clg5_sub, s.claudeG5hPct, s.claudeG5hReset)
