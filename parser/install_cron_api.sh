@@ -5,7 +5,7 @@
 set -euo pipefail
 
 DISTRO="${CLAUDE_DASH_DISTRO:-ubuntu}"
-API_SCRIPT="/data/data/com.termux/files/home/Projects/ClaudeAndroidDash/parser/claude_usage_api.sh"
+API_SCRIPT="/data/data/com.termux/files/home/Projects/AndroidApp/ClaudeAndroidDash/parser/claude_usage_api.sh"
 WRAPPER="$HOME/.local/bin/claude-dash-api-tick.sh"
 
 mkdir -p "$HOME/.local/bin"

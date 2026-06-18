@@ -21,7 +21,7 @@ BASE = "https://daily-cloudcode-pa.googleapis.com/v1internal"
 QUOTA_URL = BASE + ":retrieveUserQuotaSummary"
 LOAD_URL = BASE + ":loadCodeAssist"
 UA = "antigravity-cli"
-NOTIFY = "/data/data/com.termux/files/home/Projects/ClaudeAndroidDash/parser/notify_widgets.sh"
+NOTIFY = "/data/data/com.termux/files/home/Projects/AndroidApp/ClaudeAndroidDash/parser/notify_widgets.sh"
 PROJECT_CACHE = "/data/data/com.termux/files/home/.cache/cd_google_project"
 
 TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token"

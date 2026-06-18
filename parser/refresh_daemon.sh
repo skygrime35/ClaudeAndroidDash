@@ -10,7 +10,7 @@
 # avec l'écran = quand l'utilisateur clique. Lancé au boot par ~/.termux/boot/.
 export PATH="/data/data/com.termux/files/usr/bin:$PATH"
 
-DIR="/data/data/com.termux/files/home/Projects/ClaudeAndroidDash/parser"
+DIR="/data/data/com.termux/files/home/Projects/AndroidApp/ClaudeAndroidDash/parser"
 LOG="/sdcard/Download/widget_refresh.log"     # triggers écrits par l'app (lus ici)
 DLOG="/sdcard/Download/widget_daemon.log"     # journal interne du démon (sorties scripts)
 PIDFILE="/data/data/com.termux/files/home/.cache/cd_refresh_daemon.pid"

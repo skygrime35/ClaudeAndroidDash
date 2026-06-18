@@ -4,7 +4,7 @@ set -euo pipefail
 
 PROJ="$(cd "$(dirname "$0")" && pwd)"
 PKG="com.claudedash.widget"
-APK_NAME="${APK_NAME:-ClaudeDash-2.27.apk}"
+APK_NAME="${APK_NAME:-ClaudeDash-2.28.apk}"
 PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
 SDK_JAR="${SDK_JAR:-$HOME/.cache/android-sdk/android-34/android.jar}"
 [[ -f "$SDK_JAR" ]] || { echo "Real android.jar missing at $SDK_JAR. Run setup_sdk.sh first."; exit 1; }

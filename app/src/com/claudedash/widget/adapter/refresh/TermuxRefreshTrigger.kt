@@ -52,10 +52,10 @@ class TermuxRefreshTrigger(private val context: Context) : RefreshTrigger {
         private const val DISTRO = "ubuntu"
         private const val REFRESH_PREFIX = "/sdcard/Download/.cd_refresh_"
         private const val CLAUDE_SCRIPT =
-            "/data/data/com.termux/files/home/Projects/ClaudeAndroidDash/parser/claude_usage_api.sh"
+            "/data/data/com.termux/files/home/Projects/AndroidApp/ClaudeAndroidDash/parser/claude_usage_api.sh"
         private const val GEMINI_SCRIPT =
-            "/data/data/com.termux/files/home/Projects/ClaudeAndroidDash/parser/gemini_usage_api.sh"
+            "/data/data/com.termux/files/home/Projects/AndroidApp/ClaudeAndroidDash/parser/gemini_usage_api.sh"
         private const val COMBINED_SCRIPT =
-            "/data/data/com.termux/files/home/Projects/ClaudeAndroidDash/parser/refresh_all.sh"
+            "/data/data/com.termux/files/home/Projects/AndroidApp/ClaudeAndroidDash/parser/refresh_all.sh"
     }
 }

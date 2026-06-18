@@ -1,9 +1,13 @@
 package com.claudedash.widget
 
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.widget.RemoteViews
 import com.claudedash.widget.di.ServiceLocator
 import com.claudedash.widget.ui.WidgetRenderer
@@ -33,7 +37,29 @@ class RefreshActivity : Activity() {
 
         // Affiche "…" puis finit aussitôt → pas de gel de l'interface.
         renderRefreshing(mgr, target)
+        scheduleRerenderFallback(target)
         finish()
+    }
+
+    // Planifie des re-renders différés via AlarmManager : filet de sécurité si
+    // notify_widgets.sh est lent ou si le démon n'a pas encore redémarré.
+    private fun scheduleRerenderFallback(target: String) {
+        val am = getSystemService(AlarmManager::class.java) ?: return
+        val (cls, delays, baseReq) = when (target) {
+            "combined" -> Triple(CombinedUsageWidget::class.java, longArrayOf(12_000L, 22_000L), 230)
+            "gemini"   -> Triple(GeminiUsageWidget::class.java, longArrayOf(15_000L, 28_000L), 220)
+            else       -> Triple(UsageWidget::class.java, longArrayOf(7_000L, 14_000L), 210)
+        }
+        val now = SystemClock.elapsedRealtime()
+        delays.forEachIndexed { i, delay ->
+            val pi = PendingIntent.getBroadcast(
+                this, baseReq + i,
+                Intent("com.claudedash.widget.ACTION_UPDATE_ALL")
+                    .setComponent(ComponentName(packageName, cls.name)),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            am.set(AlarmManager.ELAPSED_REALTIME, now + delay, pi)
+        }
     }
 
     private fun renderRefreshing(mgr: AppWidgetManager, target: String) = when (target) {

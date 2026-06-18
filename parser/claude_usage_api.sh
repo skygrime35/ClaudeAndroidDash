@@ -88,4 +88,4 @@ CLAUDE_JSON=$(jq -n --arg ua "$NOW_ISO" \
 [ -f "$OUT" ] || echo '{}' > "$OUT"
 jq --argjson c "$CLAUDE_JSON" '.claude = $c' "$OUT" > "$TMP" && mv -f "$TMP" "$OUT"
 echo "wrote .claude in $OUT"
-bash /data/data/com.termux/files/home/Projects/ClaudeAndroidDash/parser/notify_widgets.sh
+bash /data/data/com.termux/files/home/Projects/AndroidApp/ClaudeAndroidDash/parser/notify_widgets.sh
