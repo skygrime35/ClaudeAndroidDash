@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -22,54 +22,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Home-screen widget that tracks your Claude Code usage (5h block + weekly window)."
+            android:text="Widget qui affiche votre consommation Claude en temps réel."
             android:textColor="#CCCCCC"
             android:textSize="14sp" />
 
+        <!-- SECTION : Clé API Anthropic -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="1. Storage permission"
+            android:layout_marginTop="32dp"
+            android:text="Clé API Anthropic"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="The widget reads /sdcard/Download/claude_usage.json written by Termux. Without file access, there is nothing to display."
+            android:layout_marginTop="6dp"
+            android:text="Obtenez une clé API sur console.anthropic.com → Settings → API Keys. Elle commence par sk-ant-api03-..."
             android:textColor="#AAAAAA"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/grant_storage"
+            android:id="@+id/btn_get_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Ouvrir Anthropic Console →" />
+
+        <EditText
+            android:id="@+id/et_api_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="sk-ant-api03-..."
+            android:inputType="textVisiblePassword"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#666666"
+            android:background="#1E1E1E"
+            android:padding="12dp"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btn_save_key"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Grant file access" />
+            android:text="Sauvegarder la clé" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="2. Termux RUN_COMMAND (optional)"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="For manual refresh on tap: edit ~/.termux/termux.properties → allow-external-apps=true, then run termux-reload-settings."
-            android:textColor="#AAAAAA"
-            android:textSize="12sp" />
-
+        <!-- SECTION : Done -->
         <Button
-            android:id="@+id/continue_btn"
+            android:id="@+id/btn_done"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Done" />
+            android:layout_marginTop="32dp"
+            android:text="Terminer" />
+
     </LinearLayout>
 </ScrollView>

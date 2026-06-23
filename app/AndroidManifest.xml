@@ -6,9 +6,8 @@
 
     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="34" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.termux.permission.RUN_COMMAND" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:label="Claude Dash"
@@ -24,6 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
+        <service
+            android:name=".adapter.refresh.ApiRefreshService"
+            android:exported="false" />
 
         <receiver
             android:name=".UsageWidget"
